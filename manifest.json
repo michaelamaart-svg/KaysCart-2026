@@ -1,0 +1,19 @@
+{
+  "name": "Kisses with Kayla",
+  "short_name": "Kay's Cart",
+  "description": "A cute shopping list and budget tracker",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080d18",
+  "theme_color": "#080d18",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle", "finance"],
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

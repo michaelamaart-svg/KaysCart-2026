@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d18">
+    <meta name="description" content="Kay's Cart shopping list and budget tracker.">
+    <link rel="manifest" href="manifest.json">
+    <title>Kisses with Kayla | Shopping List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="#" aria-label="Kisses with Kayla home"><span class="brand-mark" aria-hidden="true">✳</span><span>kisses with kayla <span class="brand-kiss" aria-hidden="true">💋</span></span></a>
+            <div class="mode-switch" role="group" aria-label="Choose app view">
+                <button class="mode-button active" data-mode="budget" type="button"><span class="nav-icon" aria-hidden="true">◈</span><span>Budget</span></button>
+                <button class="mode-button" data-mode="shopping" type="button"><span class="nav-icon" aria-hidden="true">🛒</span><span>Shopping</span></button>
+            </div>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Light mode</span></button>
+        </header>
+
+        <section class="hero" aria-labelledby="pageTitle">
+            <div class="hero-copy">
+                <p class="eyebrow">A little more freedom, one choice at a time</p>
+                <h1 id="pageTitle">Making your money<br><em>work for you, babe.</em></h1>
+                <p class="intro">Keep your spending cute, clear, and completely in your hands.</p>
+            </div>
+            <div class="cherry-decor" aria-hidden="true">
+                <img class="cherry-photo cherry-photo-one" src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=180&h=180&q=85" alt="">
+                <img class="cherry-photo cherry-photo-two" src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=140&h=140&q=85" alt="">
+                <img class="cherry-photo cherry-photo-three" src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=110&h=110&q=85" alt="">
+            </div>
+        </section>
+
+        <section class="list-card" aria-label="Shopping list" hidden>
+            <div class="card-heading">
+                <div><p class="section-kicker">YOUR GROCERIES</p><h2>Little things, big meals</h2></div>
+                <div class="progress-wrap" aria-label="Shopping progress"><span id="progressText">0 / 0</span><div class="progress-track"><span id="progressBar"></span></div></div>
+            </div>
+
+            <form class="input-area" id="itemForm">
+                <label class="sr-only" for="itemInput">Add an item</label>
+                <input type="text" id="itemInput" placeholder="What are we missing?" autocomplete="off" maxlength="80">
+                <label class="sr-only" for="categoryInput">Choose a category</label>
+                <select id="categoryInput" aria-label="Category"><option value="produce">Produce</option><option value="pantry">Pantry</option><option value="chilled">Chilled</option><option value="treats">Treats</option></select>
+                <button id="addButton" type="submit"><span aria-hidden="true">+</span> Add item</button>
+            </form>
+
+            <div class="list-toolbar">
+                <div class="filters" role="group" aria-label="Filter list">
+                    <button class="filter-button active" data-filter="all" type="button">All <span id="allCount">0</span></button>
+                    <button class="filter-button" data-filter="active" type="button">To buy <span id="activeCount">0</span></button>
+                    <button class="filter-button" data-filter="done" type="button">Picked up <span id="doneCount">0</span></button>
+                </div>
+                <button class="clear-button" id="clearButton" type="button">Clear picked up</button>
+            </div>
+
+            <ul id="shoppingList" aria-live="polite"></ul>
+            <div class="empty-state" id="emptyState"><span class="empty-icon" aria-hidden="true">♡</span><p>Your list is feeling light.</p><span>Add something tasty above to get started.</span></div>
+        </section>
+
+        <section class="budget-card" id="budgetPanel" aria-label="Budget tracker">
+            <div class="budget-heading">
+                <div><p class="section-kicker">MY SPENDING</p><h2>Pretty smart with money</h2></div>
+                <span class="budget-month" id="budgetMonth">CURRENT MONTH</span>
+            </div>
+
+            <div class="money-grid">
+                <div class="money-card plan-total-money"><span>Full total</span><strong id="planTotalAmount">R300.00</strong><small>Set in your budget plan</small></div>
+                <div class="money-card total-money"><span>Spent so far</span><strong id="totalSpent">R0.00</strong><small id="entrySummary">0 purchases</small></div>
+                <div class="money-card budget-money"><span>Available now</span><strong id="availableAmount">R300.00</strong><small id="budgetStatus">R300.00 left to spend</small></div>
+                <div class="money-card category-money"><span>Top category</span><strong id="topCategory">No data yet</strong><small>Based on your entries</small></div>
+            </div>
+
+            <form class="plan-form" id="budgetPlanForm">
+                <div class="plan-copy"><span class="plan-kicker">MY BUDGET PLAN</span><strong id="planPurposeLabel">Give your money a job</strong><small>Set your total and what you are saving or spending it for.</small></div>
+                <div><label for="planTotal">I have</label><div class="amount-input"><span>R</span><input id="planTotal" type="number" min="0" step="0.01" placeholder="0.00" required></div></div>
+                <div class="plan-purpose"><label for="planPurpose">I am using it for</label><input id="planPurpose" type="text" placeholder="e.g. groceries and fun" maxlength="80" required></div>
+                <button class="neon-button" type="submit">Save plan</button>
+            </form>
+
+            <div class="chart-section">
+                <div><span class="chart-kicker">SPENDING MIX</span><strong>Where your money goes</strong><small id="chartSummary">Log purchases to see your mix.</small></div>
+                <div class="pie-wrap"><div class="pie-chart" id="pieChart" role="img" aria-label="Spending distribution chart"></div><div class="chart-legend" id="chartLegend"></div></div>
+            </div>
+
+            <form class="budget-form" id="budgetForm">
+                <div class="field-grow"><label for="expenseName">What did you buy?</label><input id="expenseName" type="text" placeholder="e.g. Sunday market" maxlength="80" required></div>
+                <div><label for="expenseAmount">Amount</label><div class="amount-input"><span>R</span><input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div></div>
+                <div><label for="expenseCategory">Category</label><select id="expenseCategory"><option value="produce">Produce</option><option value="pantry">Pantry</option><option value="chilled">Chilled</option><option value="treats">Treats</option><option value="other">Other</option></select></div>
+                <button class="neon-button" type="submit"><span aria-hidden="true">+</span> Log spending</button>
+            </form>
+
+            <div class="budget-list-heading"><span>RECENT PURCHASES</span><button id="clearBudget" type="button">Clear all</button></div>
+            <ul class="budget-list" id="budgetList" aria-live="polite"></ul>
+            <div class="empty-state" id="budgetEmpty"><span class="empty-icon" aria-hidden="true">♡</span><p>No spending logged yet.</p><span>Add your first purchase above.</span></div>
+        </section>
+
+        <footer class="app-footer"><span><i aria-hidden="true"></i> A calmer way to shop</span><span id="itemSummary">0 items on your list</span></footer>
+    </main>
+
+    <template id="itemTemplate">
+        <li class="shopping-item">
+            <span class="item-image"><img src="" alt=""><span class="fallback-letter" aria-hidden="true">K</span></span>
+            <label class="item-main"><input class="check-input" type="checkbox"><span class="checkmark" aria-hidden="true">✓</span><span class="item-name"></span></label>
+            <span class="category-tag"></span><button class="delete-button" type="button" aria-label="Remove item">×</button>
+        </li>
+    </template>
+
+    <template id="budgetTemplate">
+        <li class="budget-entry"><span class="budget-image"><img src="" alt=""><span class="fallback-letter" aria-hidden="true">K</span></span><div class="budget-entry-name"><strong></strong><span></span></div><strong class="entry-amount"></strong><button class="entry-delete" type="button" aria-label="Remove purchase">×</button></li>
+    </template>
+
+    <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(error => console.error('Service Worker failed:', error));
+            });
+        }
+    </script>
+
+</body>
+</html>
